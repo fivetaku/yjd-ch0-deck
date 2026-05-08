@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>윤자동 원데이클래스 — Ch0 오리엔테이션</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #ffffff;
+    --bg-surface:   #f5f5f5;
+    --bg-pair:      #FFE5EB;
+    --bg-dark:      #1d242f;
+    --bg-peak:      #1d242f;
+
+    --fg:           #1d242f;
+    --fg-muted:     #5B5B5B;
+    --fg-quiet:     #BBBBBB;
+    --fg-on-dark:   #ffffff;
+    --fg-on-dark-2: #BBBBBB;
+
+    --accent:       #FC1C49;
+    --accent-bg:    #FFE5EB;
+
+    --border:       #E6E6E6;
+    --border-rule:  #B3B3B3;
+
+    --font-body:    "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --font-latin:   "DM Sans", "Pretendard Variable", -apple-system, sans-serif;
+    --font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, "JetBrains Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e5e7eb; font-family: var(--font-body); color: var(--fg); }
+  body { display: flex; flex-direction: column; align-items: center; padding: 24px; gap: 24px; }
+
+  .slide {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* 상단 그라디언트 바 */
+  .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--bg-dark) 0%, var(--accent) 60%, #FF5C7A 100%);
+    z-index: 10;
+  }
+
+  /* 하단 풋터 */
+  .footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 44px;
+    background: var(--bg-dark);
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    font-family: var(--font-latin);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    z-index: 10;
+  }
+  .footer .brand { font-weight: 600; }
+  .footer .page { color: rgba(255,255,255,0.45); font-variant-numeric: tabular-nums; }
+
+  /* 본문 영역 */
+  .body {
+    position: absolute;
+    top: 6px;
+    left: 0; right: 0;
+    bottom: 44px;
+    padding: 56px 72px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .body.peak {
+    background: var(--bg-peak);
+    color: var(--fg-on-dark);
+  }
+
+  /* 헤더 영역 */
+  .slide-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .slide-header .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-family: var(--font-latin);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border-radius: 11px;
+  }
+  .slide-header .title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* 표지 (슬라이드 1) */
+  .cover {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover .tag {
+    display: inline-block;
+    width: max-content;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-family: var(--font-latin);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    padding: 6px 14px;
+    border-radius: 4px;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 12px 0;
+  }
+  .cover h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--fg-muted);
+    letter-spacing: -0.02em;
+    margin: 0 0 60px 0;
+  }
+  .cover .meta {
+    font-size: 16px;
+    color: var(--fg-muted);
+  }
+  .cover .meta strong { color: var(--fg); font-weight: 600; }
+  .cover .meta .date { font-family: var(--font-latin); }
+
+  /* 슬라이드 2 — 강사 소개 */
+  .speaker {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 56px;
+    align-items: stretch;
+  }
+  .speaker .photo {
+    width: 280px; height: 280px;
+    background: linear-gradient(135deg, var(--accent-bg) 0%, #FFD3DC 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-family: var(--font-latin);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+  .speaker .info { display: flex; flex-direction: column; }
+  .speaker .info .name {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .speaker .info .nick {
+    font-size: 18px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .speaker .info .career {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .speaker .info .career li { color: var(--fg); }
+  .speaker .info .career li strong { color: var(--accent); font-weight: 700; }
+  .speaker .info .career li span { color: var(--fg-muted); font-size: 15px; }
+  .speaker .quote {
+    margin: 0;
+    padding: 18px 22px;
+    background: var(--bg-surface);
+    border-left: 4px solid var(--accent);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--fg);
+    border-radius: 4px;
+  }
+  .speaker .quote strong { color: var(--accent); font-weight: 700; }
+
+  /* 슬라이드 3 — peak (다크) */
+  .peak-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .peak-content .lead {
+    font-size: 22px;
+    color: var(--fg-on-dark-2);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .peak-content h1 {
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0 0 40px 0;
+    color: var(--fg-on-dark);
+  }
+  .peak-content h1 .highlight {
+    color: var(--accent);
+    background: linear-gradient(180deg, transparent 60%, rgba(252,28,73,0.18) 60%);
+  }
+  .peak-content .tail {
+    font-size: 22px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .peak-content .tail strong { color: #FF5C7A; }
+
+  /* 슬라이드 4 — 시간표 테이블 */
+  .schedule {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .schedule table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 15px;
+  }
+  .schedule colgroup col:nth-child(1) { width: 18%; }
+  .schedule colgroup col:nth-child(2) { width: 36%; }
+  .schedule colgroup col:nth-child(3) { width: 46%; }
+
+  .schedule th, .schedule td {
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.45;
+  }
+  .schedule th {
+    background: var(--bg-surface);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--accent);
+  }
+  .schedule td.time {
+    font-family: var(--font-latin);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+  }
+  .schedule tr.highlight td { background: var(--accent-bg); }
+  .schedule tr.highlight td.outcome { font-weight: 700; color: var(--fg); }
+  .schedule tr.lunch td { color: var(--fg-quiet); font-style: italic; }
+
+  /* 슬라이드 5 — 5 STEP 카드 */
+  .steps {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .steps .sub {
+    font-size: 17px;
+    color: var(--fg-muted);
+    margin-bottom: 32px;
+  }
+  .steps .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    flex: 1;
+    align-items: stretch;
+  }
+  .step-card {
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+  }
+  .step-card .num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-latin);
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-card .label {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .step-card .desc {
+    font-size: 13px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+    margin-top: auto;
+  }
+  .step-card .desc code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+  .steps .footnote {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--fg-muted);
+  }
+  .steps .footnote strong { color: var(--accent); font-weight: 700; }
+
+  /* 슬라이드 6 — 시작 명령 */
+  .start {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: stretch;
+  }
+  .start .col {
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .start .col .label {
+    font-family: var(--font-latin);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+  }
+  .start .col h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.01em;
+  }
+  .start .col pre {
+    background: var(--bg-dark);
+    color: #fff;
+    padding: 18px 22px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    margin: 0 0 16px 0;
+    overflow: hidden;
+  }
+  .start .col pre.big {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    padding: 28px;
+  }
+  .start .col pre .accent { color: #FF5C7A; }
+  .start .col p { font-size: 14px; color: var(--fg-muted); line-height: 1.55; margin: 0; }
+  .start .col p strong { color: var(--fg); font-weight: 600; }
+
+  /* 슬라이드 7 — 마무리 */
+  .end {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .end .lead {
+    font-size: 22px;
+    color: var(--fg-muted);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .end .next-cmd {
+    background: var(--bg-dark);
+    color: #fff;
+    padding: 36px 80px;
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 48px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .end .next-cmd .accent { color: #FF5C7A; }
+  .end .arrow-row {
+    font-size: 24px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .end .arrow-row .step {
+    color: var(--fg);
+  }
+  .end .arrow-row .arr {
+    color: var(--accent);
+    margin: 0 12px;
+    font-family: var(--font-latin);
+  }
+
+  /* 인쇄용 */
+  @page { size: 1280px 720px landscape; margin: 0; }
+  @media print {
+    html, body { background: #fff; padding: 0; gap: 0; }
+    body { display: block; }
+    .slide { box-shadow: none; page-break-after: always; }
+    .slide:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 슬라이드 1 — 표지 -->
+<div class="slide" id="slide-1">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="cover">
+      <div class="tag">WORKSHOP · 2026.05.09</div>
+      <h1>윤자동 원데이클래스</h1>
+      <h2>Ch0 — 오리엔테이션</h2>
+      <div class="meta">
+        By. <strong>이철로 (지피타쿠)</strong> · <span class="date">2026.05.09 (토)</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">1 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 2 — 강사 소개 -->
+<div class="slide" id="slide-2">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="slide-header">
+      <span class="badge">SPEAKER</span>
+      <span class="title">강사 소개</span>
+    </div>
+    <div class="speaker">
+      <div class="photo">PROFILE</div>
+      <div class="info">
+        <div class="name">이철로</div>
+        <div class="nick">지피타쿠 — 클코대장</div>
+        <ul class="career">
+          <li>현) <strong>AX with</strong> — AX 컨설팅 &amp; AI 교육 설계</li>
+          <li>현) <strong>1인 개발자</strong> — AI 기반 서비스 개발</li>
+          <li>전) <strong>R&amp;D 메카니컬 엔지니어 10년</strong> <span>(GENTLE MONSTER, LG INNOTEK 등)</span></li>
+        </ul>
+        <blockquote class="quote">
+          10년 R&amp;D 엔지니어가 <strong>클로드코드 만나고 일을 바꿨거든요</strong>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">2 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 3 — 강의 본질 (peak / 다크) -->
+<div class="slide" id="slide-3">
+  <div class="topbar"></div>
+  <div class="body peak">
+    <div class="peak-content">
+      <div class="lead">강의 끝나면 따라쳤던 게 다 사라지지 않습니다</div>
+      <h1>
+        내 자료·내 업무가 박힌<br>
+        <span class="highlight">AI 에이전트</span>를 가져갑니다
+      </h1>
+      <div class="tail">→ 오늘 끝에 손에 쥐는 것 = <strong>내 워크스페이스 1개</strong></div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">3 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 4 — 시간표 -->
+<div class="slide" id="slide-4">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="slide-header">
+      <span class="badge">SCHEDULE</span>
+      <span class="title">10:00~17:00 — 실강 6H + 점심 1H</span>
+    </div>
+    <div class="schedule">
+      <table>
+        <colgroup>
+          <col><col><col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>시간</th>
+            <th>챕터</th>
+            <th>손에 쥐는 것</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="time">10:00~10:30</td>
+            <td>Ch0 셋업</td>
+            <td>alias · hook · mode</td>
+          </tr>
+          <tr>
+            <td class="time">10:30~12:00</td>
+            <td>Ch1·2·3 오전 — 같이 만들기</td>
+            <td>차트·보고서·HTML 대시보드 / 카드뉴스 1세트 / 공개 URL</td>
+          </tr>
+          <tr class="lunch">
+            <td class="time">12:00~13:00</td>
+            <td>점심</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="time">13:00~14:30</td>
+            <td>Ch4·5·6 도구 + 스킬</td>
+            <td>플러그인 4종 / 블로그 자동화 + 본인 스킬</td>
+          </tr>
+          <tr class="highlight">
+            <td class="time">14:45~16:30</td>
+            <td>Ch7 본인 워크스페이스</td>
+            <td class="outcome">내 사업 AI 에이전트</td>
+          </tr>
+          <tr>
+            <td class="time">16:30~17:00</td>
+            <td>공유·마무리</td>
+            <td>1분 시연 × 7명</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">4 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 5 — Ch0 5 STEP -->
+<div class="slide" id="slide-5">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="slide-header">
+      <span class="badge">CH 0 · 5 STEP</span>
+      <span class="title">환경 셋업 — 강사 시연 → 같이 따라치기</span>
+    </div>
+    <div class="steps">
+      <div class="sub">각 STEP 끝마다 "다음" 입력 → 다음 단계로</div>
+      <div class="grid">
+        <div class="step-card">
+          <div class="num">1</div>
+          <div class="label">인사 + 오늘 흐름</div>
+          <div class="desc">지금 이 슬라이드</div>
+        </div>
+        <div class="step-card">
+          <div class="num">2</div>
+          <div class="label">alias 셋업</div>
+          <div class="desc"><code>cc</code> · <code>ccd</code> · <code>ccr</code></div>
+        </div>
+        <div class="step-card">
+          <div class="num">3</div>
+          <div class="label">Hook + env</div>
+          <div class="desc">Stop hook · Safety · Agent Teams 환경변수</div>
+        </div>
+        <div class="step-card">
+          <div class="num">4</div>
+          <div class="label">모드 셋업</div>
+          <div class="desc">Auto 모드 (Pro 사용자는 Accept-edits)</div>
+        </div>
+        <div class="step-card">
+          <div class="num">5</div>
+          <div class="label">환경 점검</div>
+          <div class="desc">셋업 확인 + Ch1 진입</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">5 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 6 — 시작 명령 -->
+<div class="slide" id="slide-6">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="slide-header">
+      <span class="badge">START</span>
+      <span class="title">시작 명령</span>
+    </div>
+    <div class="start">
+      <div class="col">
+        <div class="label">CLAUDE CODE</div>
+        <h3>스킬이 5 STEP 안내해줍니다</h3>
+        <pre class="big"><span class="accent">/</span>yjd-ch0</pre>
+        <p>위 명령 입력 → 자동으로 alias·hook·mode 셋업까지 같이 진행</p>
+      </div>
+      <div class="col">
+        <div class="label">WORKSPACE</div>
+        <h3>워크스페이스 위치</h3>
+        <pre>$ cd ~/Desktop/yjd-cc
+$ cc</pre>
+        <p>아직 클로드코드 안 켜진 분 — 위 두 줄 그대로 입력하세요</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">6 / 7</span>
+  </div>
+</div>
+
+<!-- 슬라이드 7 — Ch1 으로 -->
+<div class="slide" id="slide-7">
+  <div class="topbar"></div>
+  <div class="body">
+    <div class="slide-header">
+      <span class="badge">NEXT</span>
+      <span class="title">다음 챕터</span>
+    </div>
+    <div class="end">
+      <div class="lead">셋업 끝나면 바로 →</div>
+      <div class="next-cmd"><span class="accent">/</span>yjd-ch1</div>
+      <div class="arrow-row">
+        <span class="step">데이터</span><span class="arr">→</span><span class="step">차트</span><span class="arr">→</span><span class="step">보고서</span><span class="arr">→</span><span class="step">대시보드</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="brand">지피타쿠</span>
+    <span class="page">7 / 7</span>
+  </div>
+</div>
+
+</body>
+</html>
